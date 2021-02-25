@@ -20,6 +20,7 @@ namespace TPR.Domain.Services.Implementation
         private readonly IConfiguration _configuration;
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
+        
         public AccountService(UserManager<User> userManager,
                                  SignInManager<User> signInManager,
                                  IConfiguration configuration)
@@ -35,6 +36,7 @@ namespace TPR.Domain.Services.Implementation
             {
                 Email = entity.Email,
                 UserName = entity.Email
+                
             };
             var result = await _userManager.CreateAsync(user, entity.Password);
 
@@ -58,7 +60,7 @@ namespace TPR.Domain.Services.Implementation
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.NameIdentifier, user.Id)
             };
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtKey"]));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("11-sdfasdf-22233222222"));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var expires = DateTime.Now.AddDays(Convert.ToDouble(_configuration["JwtExpireDays"]));
             var token = new JwtSecurityToken(
